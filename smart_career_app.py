@@ -34,7 +34,7 @@ tools_matrix = joblib.load("tools_matrix.pkl")
 
 #Defined the  columns for which the recommended dataframe  should have
 recommended_df = pd.DataFrame(columns=['Career', 'Skills Match %', 'Interests Match %',
-                            'Education Match %','Tools Match %' 'Final Score %'])
+                            'Education Match %','Tools Match %', 'Final Score %'])
 
 
 #Defined a function that will  do the recommendation
