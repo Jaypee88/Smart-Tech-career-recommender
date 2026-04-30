@@ -3,7 +3,9 @@
 ## 📌 Overview
 This project is an AI-powered **Career Recommendation System** that suggests suitable career paths based on a user's:
 - Skills  
-- Interests  
+- Interests 
+- Tech Tools
+
 - Educational background  
 
 It uses machine learning techniques (TF-IDF and similarity matching) to recommend careers that best match user input.
