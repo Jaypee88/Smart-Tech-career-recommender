@@ -39,6 +39,7 @@ smart_career_models/
 ├── AI-based Career Recommendation System.csv
 ├── requirements.txt
 └── README.md
+```
 ⚙️ How It Works
 User inputs:
 Skills
@@ -74,3 +75,7 @@ Nwankwo Chidozie Johnpaul
 📜 License
 
 This project is for educational purposes.
+
+To access the app follow the link below
+https://smart-tech-career-recommender-nbrwnq2usx6a5ojhetvmoo.streamlit.app/
+

@@ -1,4 +1,4 @@
- #Import the necessary libraries
+#Import the necessary libraries
 import streamlit as st
 import pandas as pd
 import joblib
@@ -68,19 +68,18 @@ def recommend(df, tfidf_skills, tfidf_interests, tfidf_edu, tfidf_tools,
         'Tools Match %': (tools_sim*100).round(2),
         'Final Score %': (final_score*100).round(2)
     })
-
-    recommended_df = recommended_df.drop_duplicates(subset=['Career']) #Dropped duplicates   from the recommended dataframe
-    # Sort by final score descending
+#Dropped duplicates for the recommended dataframe and sorted by final scoring returning top idx
+    recommended_df = recommended_df.drop_duplicates(subset=['Career'])
     recommended_df = recommended_df.sort_values(by='Final Score %', ascending=False)
     recommended_df = recommended_df.reset_index(drop=True)
     top_recs = recommended_df.head(top_n)
     return top_recs
 
-
+#Give the recommended career
 st.subheader("Top Recommended Careers")
 st.dataframe(recommended_df)
 
-#Plot a graph to show the the top recommended careers with their scores
+# A function to Plot a graph to show the top recommended careers with their similarity scores
 def plot_bar(recommended_df):
     st.subheader("Visualizing Recommendations")
     fig, ax = plt.subplots(figsize=(8,4))
@@ -88,7 +87,7 @@ def plot_bar(recommended_df):
     plt.xticks(rotation=75)
     st.pyplot(fig)
 
-
+#Features to improve the UI/UX of the app
 st.title("Smart Career Recommendation System")
 st.markdown("Use the sidebar to navigate. This app recommends tech careers based on"
             " skills, interests, tech tools and education.")
@@ -116,15 +115,16 @@ if w_sum == 0:
     weights = (0.4, 0.3, 0.1, 0.2) #A constant value  incase  user  decides not to choose the weight
 
 else:
-    #This is to normalise the weight so that no matter the user input they all should all sum  to 1
+    #This is to normalise the weight so that no matter the user input they should all sum  to 1
     weights = (weights_skill/w_sum, weights_interest/w_sum, weights_edu/w_sum, weights_tools/w_sum)
-    st.write(f"Normalized Weights: Skills={weights[0]:.2f}, Interests={weights[1]:.2f},"
-             f" Education={weights[2]:.2f}, Tools={weights[3]:.2f}")
+    st.write(f'''Normalized Weights: Skills={weights[0]:.2f}, Interests={weights[1]:.2f},
+             Education={weights[2]:.2f}, Tools={weights[3]:.2f}''')
 
 
 if  page == 'Home':
     st.header("Homepage")
-    st.write('Welcome this app recommends a career path to users based on their interests, skills, tech tools and education')
+    st.write('''Welcome this app recommends a career path to users based on their interests,
+             skills, tech tools and education''')
 
 #Added a page that allows  a user to know about the dataset and explore for some of its features
 elif page == 'Explore Dataset':
@@ -144,10 +144,10 @@ elif page == 'Recommend':
     #Defined  and now accepted some  user inputs
     user_skills = st.sidebar.text_input("Enter your Skills").strip().lower()
     user_interests = st.sidebar.text_input("Enter your Interests").strip().lower()
-    user_tools = st.sidebar.text_input("Enter tech tools you are conversant with").strip().lower()
+    user_tools =st.sidebar.text_input("Enter tech tools you are conversant with").strip().lower()
     Education_options = ['Postgraduate', 'Graduate', 'Undergraduate']
     user_education = st.selectbox('Education', Education_options)
-    top_n = st.number_input('How many recommendations to show?', min_value=1, max_value=10, value=5)
+    top_n = st.number_input('How many recommendations to show?',min_value=1,max_value=10,value=5)
 
     if st.button('Recommend Career'):
         if not user_skills or not user_interests or not user_education or not user_tools:
@@ -159,18 +159,18 @@ elif page == 'Recommend':
                              user_skills, user_interests, user_education, user_tools,
                              weights=weights, top_n=top_n)
 
-#Called the function to recommend and all other functions predefined beforre 
+#Called the function to recommend and all other functions predefined before
             if recs is not None and not recs.empty:
                 st.subheader("Top Recommended Careers")
                 st.dataframe(recs)
                 st.subheader('Visual representations')
                 plot_bar(recs)
                 csv = recs.to_csv(index=False).encode('utf-8')
-                st.download_button("Download Recommendations", data=csv, file_name="career_recommendations.csv")
+                st.download_button("Download Recommendations", data=csv,
+                                   file_name="career_recommendations.csv")
             else:
                 st.warning("No matching careers found.")
 
-st.markdown('>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>')
-st.caption('Smart Career recommendation system built for my project report')
+
 
 
